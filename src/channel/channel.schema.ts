@@ -10,6 +10,9 @@ export const ChannelSchema = new mongoose.Schema<IChannel>(
     description: { type: String, required: true },
     country: { type: String, required: true },
     createDate: { type: Date },
+    totalViews: { type: Number },
+    totalSubscribers: { type: Number },
+    totalVideos: { type: Number },
   },
   {
     timestamps: true,

@@ -1,4 +1,4 @@
-import { IsString } from "class-validator";
+import { IsOptional, IsString } from "class-validator";
 
 export class CreateChannelDTO {
   @IsString()
@@ -8,6 +8,7 @@ export class CreateChannelDTO {
   username: string;
 
   @IsString()
+  @IsOptional()
   logo?: string;
 
   @IsString()

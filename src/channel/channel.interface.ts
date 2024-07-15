@@ -8,6 +8,9 @@ export interface IChannel {
   category: string;
   description: string;
   createDate?: Date;
+  totalViews?: number;
+  totalSubscribers?: number;
+  totalVideos?: number;
 }
 
 export type IChannelModel = Model<IChannel>;

@@ -10,7 +10,7 @@ export class UsersController {
     const data = await this.userService.findAll();
     return {
       success: true,
-      message: "Users Retrieved Successfully",
+      message: "Users Retrieved Successfully!",
       data,
     };
   }

@@ -1,6 +1,7 @@
 import "dotenv/config";
 
 const config = {
+  isDevelopment: process.env.NODE_ENV === "development",
   port: process.env.PORT,
   database_url: process.env.DATABASE_URL,
   server_url: process.env.SERVER_URL,

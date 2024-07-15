@@ -1,10 +1,9 @@
-import { NestFactory } from "@nestjs/core";
-import { AppModule } from "./app/app.module";
-import "dotenv/config";
-import config from "config";
 import { ValidationPipe } from "@nestjs/common";
+import { NestFactory } from "@nestjs/core";
+import config from "config";
+import "dotenv/config";
+import { AppModule } from "./app/app.module";
 import { AllExceptionsFilter } from "./error/all-exceptions.filter";
-import { NotFoundExceptionFilter } from "./error/not-found-exception.filter";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -16,10 +15,7 @@ async function bootstrap() {
 
   // ----- Error handlers
   // Bind the custom exception filter globally
-  app.useGlobalFilters(
-    new AllExceptionsFilter(),
-    new NotFoundExceptionFilter()
-  );
+  app.useGlobalFilters(new AllExceptionsFilter());
 
   // ----- Start server
   await app.listen(config.port);

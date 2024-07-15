@@ -1,0 +1,20 @@
+import { Model } from "mongoose";
+
+export interface IChannel {
+  name: string;
+  username: string;
+  logo?: string;
+  country: string;
+  category: string;
+  description: string;
+  createDate?: Date;
+}
+
+export type IChannelModel = Model<IChannel>;
+
+export interface IChannelQueryParams {
+  page: number;
+  limit: number;
+  sortBy?: string;
+  sortOrder?: "asc" | "desc";
+}

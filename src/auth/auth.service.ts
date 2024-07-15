@@ -1,7 +1,7 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import { Model } from 'mongoose';
-import { IUser, IUserResponse } from 'src/users/users.interface';
+import { Inject, Injectable } from "@nestjs/common";
+import { JwtService } from "@nestjs/jwt";
+import { Model } from "mongoose";
+import { IUser, IUserResponse } from "src/users/users.interface";
 
 @Injectable()
 export class AuthService {
@@ -23,6 +23,7 @@ export class AuthService {
         name: req?.user?.name,
         email: req?.user?.email,
         googleId: req?.user?.googleId,
+        avatar: req?.user?.avatar,
       };
       user = await this.userModel.create(data);
     }

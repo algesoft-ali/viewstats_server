@@ -6,14 +6,14 @@ import { JwtModule } from "@nestjs/jwt";
 import { GoogleStrategy } from "src/strategies/google.strategy";
 import { usersProviders } from "src/users/users.providers";
 import { DatabaseModule } from "src/database/database.module";
-import config from "config";
+import config from "src/config";
 
 @Module({
   imports: [
     DatabaseModule,
     UsersModule,
     JwtModule.register({
-      secret:config.jwt_secret,
+      secret: config.jwt_secret,
       signOptions: { expiresIn: "1d" },
     }),
   ],

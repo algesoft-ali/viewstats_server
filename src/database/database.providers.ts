@@ -1,4 +1,4 @@
-import config from "config";
+import config from "src/config";
 import * as mongoose from "mongoose";
 
 export const databaseProviders = [

@@ -8,7 +8,7 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from "@nestjs/common";
-import config from "config";
+import config from "src/config";
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {

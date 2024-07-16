@@ -20,4 +20,5 @@ export interface IChannelQueryParams {
   limit: number;
   sortBy?: string;
   sortOrder?: "asc" | "desc";
+  search?: string;
 }

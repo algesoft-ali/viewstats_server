@@ -16,10 +16,24 @@ export class ChannelService {
     limit,
     sortBy,
     sortOrder,
+    search,
   }: IChannelQueryParams): Promise<{ total: number; data: IChannel[] }> {
+    const filter = search
+      ? {
+          $or: [
+            { name: { $regex: new RegExp(search, "i") } },
+            {
+              username: { $regex: new RegExp(search, "i") },
+            },
+          ],
+        }
+      : {};
+
     const data = await this.channelModel.find(
-      {},
-      {},
+      filter,
+      {
+        description: 0,
+      },
       {
         sort: {
           [sortBy]: sortOrder,
@@ -29,8 +43,29 @@ export class ChannelService {
       }
     );
 
-    const total = await this.channelModel.countDocuments();
+    const total = await this.channelModel.countDocuments(filter);
     return { total, data };
+  }
+
+  async findOne(id: string): Promise<IChannel> {
+    const channel = await this.channelModel.findById(id);
+
+    return channel;
+  }
+
+  async findByUsername(username: string): Promise<IChannel> {
+    return await this.channelModel.findOne({ username });
+  }
+
+  async findPopularChannels(): Promise<IChannel[]> {
+    const result = await this.channelModel.aggregate([
+      { $sort: { totalViews: -1 } },
+      { $limit: 20 },
+      { $project: { description: 0 } },
+      { $sample: { size: 6 } },
+    ]);
+
+    return result;
   }
 
   async createChannel(input: IChannel): Promise<IChannel> {

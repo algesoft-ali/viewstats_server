@@ -73,11 +73,11 @@ export class ChannelController {
   }
 
   // ------ Get Single Channel
-  @Get(":id")
-  async findOne(@Param() param: { id: string }) {
+  @Get(":username")
+  async findOne(@Param() param: { username: string }) {
     try {
-      const id = param.id;
-      const data = await this.channelService.findOne(id);
+      const username = param.username;
+      const data = await this.channelService.findByUsername(username);
       return {
         success: true,
         message: "Channel Retrieved Successfully",

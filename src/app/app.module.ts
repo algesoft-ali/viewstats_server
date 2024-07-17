@@ -5,9 +5,10 @@ import { AuthModule } from "src/auth/auth.module";
 import { LoggerMiddleware } from "src/middleware/logger.middleware";
 import { ChannelModule } from "src/channel/channel.module";
 import { DailySubscriberModule } from "src/daily-subscriber/daily-subscriber.module";
+import { DailyViewsModule } from "src/daily-views/daily-views.module";
 
 @Module({
-  imports: [AuthModule, UsersModule, ChannelModule, DailySubscriberModule],
+  imports: [AuthModule, UsersModule, ChannelModule, DailySubscriberModule, DailyViewsModule],
   controllers: [AppController],
   providers: [],
 })

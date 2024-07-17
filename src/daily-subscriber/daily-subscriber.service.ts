@@ -51,10 +51,16 @@ export class DailySubscriberService {
     };
 
     const data = await this.dailySubscriberModel
-      .find(filter, {
-        createdAt: 0,
-        updatedAt: 0,
-      })
+      .find(
+        filter,
+        {
+          createdAt: 0,
+          updatedAt: 0,
+        },
+        {
+          sort: { date: -1 },
+        }
+      )
       .exec();
 
     const total = await this.dailySubscriberModel.countDocuments(filter);

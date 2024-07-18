@@ -6,9 +6,7 @@ import { AppModule } from "./app/app.module";
 import { AllExceptionsFilter } from "./error/all-exceptions.filter";
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, {
-    logger: ["error", "warn", "log"],
-  });
+  const app = await NestFactory.create(AppModule);
   // ----- Middlewares
   app.enableCors();
   app.useGlobalPipes(new ValidationPipe());

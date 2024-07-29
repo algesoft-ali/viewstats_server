@@ -24,6 +24,10 @@ import { DailySubscriberSchema } from "src/daily-subscriber/daily-subscriber.sch
 import { IUser, IUserModel } from "src/users/users.interface";
 import { UserSchema } from "src/users/users.schema";
 
+// video
+import { IVideo, IVideoModel } from "src/video/video.interface";
+import { VideoSchema } from "src/video/video.schema";
+
 export const databaseProviders = [
   {
     provide: "DATABASE_CONNECTION",
@@ -58,6 +62,12 @@ export const databaseProviders = [
     provide: "USER_MODEL",
     useFactory: (connection: Connection) =>
       connection.model<IUser, IUserModel>("users", UserSchema),
+    inject: ["DATABASE_CONNECTION"],
+  },
+  {
+    provide: "VIDEO_MODEL",
+    useFactory: (connection: Connection) =>
+      connection.model<IVideo, IVideoModel>("videos", VideoSchema),
     inject: ["DATABASE_CONNECTION"],
   },
 ];

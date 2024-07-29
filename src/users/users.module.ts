@@ -1,10 +1,9 @@
 import { Module } from "@nestjs/common";
-import { UsersController } from "./users.controller";
-import { UsersService } from "./users.service";
-import { DatabaseModule } from "src/database/database.module";
-import { usersProviders } from "./users.providers";
 import { JwtModule } from "@nestjs/jwt";
 import config from "src/config";
+import { DatabaseModule } from "src/database/database.module";
+import { UsersController } from "./users.controller";
+import { UsersService } from "./users.service";
 
 @Module({
   imports: [
@@ -15,6 +14,6 @@ import config from "src/config";
     }),
   ],
   controllers: [UsersController],
-  providers: [UsersService, ...usersProviders],
+  providers: [UsersService],
 })
 export class UsersModule {}

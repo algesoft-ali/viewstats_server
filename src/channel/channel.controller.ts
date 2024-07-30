@@ -41,6 +41,8 @@ export class ChannelController {
       ? (String(req.query.sortOrder) as "asc" | "desc")
       : "desc";
     const search = req.query.search ? String(req.query.search) : "";
+    const country = req?.query.country ? String(req.query.country) : "";
+    const category = req?.query.category ? String(req.query.category) : "";
 
     const { data, total } = await this.channelService.findAll({
       page,
@@ -48,6 +50,8 @@ export class ChannelController {
       sortBy,
       sortOrder,
       search,
+      country,
+      category,
     });
     return {
       success: true,

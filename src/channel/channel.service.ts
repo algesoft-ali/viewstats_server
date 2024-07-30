@@ -17,8 +17,9 @@ export class ChannelService {
     sortBy,
     sortOrder,
     search,
-  }: IChannelQueryParams): Promise<{ total: number; data: IChannel[] }> {
-    const filter = search
+    ...queries //country, category
+  }: IChannelQueryParams) {
+    const searchFilter = search
       ? {
           $or: [
             { name: { $regex: new RegExp(search, "i") } },
@@ -27,7 +28,21 @@ export class ChannelService {
             },
           ],
         }
-      : {};
+      : undefined;
+
+    const andFilter =
+      queries && Object.keys(queries).length
+        ? {
+            $and: Object.entries(queries).map(([key, value]) => ({
+              [key]: { $regex: new RegExp(value, "i") },
+            })),
+          }
+        : undefined;
+
+    const filter = {
+      ...searchFilter,
+      ...andFilter,
+    };
 
     const data = await this.channelModel.find(
       filter,

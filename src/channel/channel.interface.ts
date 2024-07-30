@@ -21,4 +21,6 @@ export interface IChannelQueryParams {
   sortBy?: string;
   sortOrder?: "asc" | "desc";
   search?: string;
+  country?: string;
+  category?: string
 }

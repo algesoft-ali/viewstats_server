@@ -18,6 +18,7 @@ export class VideoService {
     search,
     sortBy,
     sortOrder,
+    channel,
   }: IVideoQueryParams): Promise<{ data: IVideo[]; total: number }> {
     const filter = search
       ? {
@@ -25,17 +26,19 @@ export class VideoService {
         }
       : {};
 
-    const data = await this.videoModel.find(
-      filter,
-      {},
-      {
-        sort: {
-          [sortBy]: sortOrder,
-        },
-        skip: (page - 1) * limit,
-        limit,
-      }
-    );
+    const data = await this.videoModel
+      .find(
+        filter,
+        {},
+        {
+          sort: {
+            [sortBy]: sortOrder,
+          },
+          skip: (page - 1) * limit,
+          limit,
+        }
+      )
+      .populate(channel ? "channel" : "", channel ? "_id name username logo" : "");
 
     const total = await this.videoModel.countDocuments(filter);
 
@@ -43,7 +46,11 @@ export class VideoService {
   }
 
   async findOne(id: string): Promise<IVideo> {
-    const data = await this.videoModel.findById(id);
+    const data = await this.videoModel.findById(
+      id,
+      {},
+      { populate: "channel" }
+    );
 
     return data;
   }

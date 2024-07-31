@@ -19,5 +19,6 @@ export interface IVideoQueryParams {
   sortBy?: string;
   sortOrder?: "asc" | "desc";
   search?: string;
+  channel?: boolean;
 }
 

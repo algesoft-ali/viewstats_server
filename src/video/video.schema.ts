@@ -16,7 +16,11 @@ export const VideoSchema = new mongoose.Schema<IVideo>(
       },
       required: true,
     },
-    channel: { type: String, required: true },
+    channel: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "channels",
+      required: true,
+    },
   },
   {
     timestamps: true,

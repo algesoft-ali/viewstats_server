@@ -21,31 +21,29 @@ export class VideoService {
     search,
     populate,
     country,
+    channel,
     ...queries
   }: IVideoQueryParams): Promise<{ data: IVideo[]; total: number }> {
-    const searchFilter = search
-      ? {
-          $or: [
-            { name: { $regex: new RegExp(search, "i") } },
-            {
-              username: { $regex: new RegExp(search, "i") },
-            },
-          ],
-        }
-      : undefined;
+    const andFilter = [];
+    const orFilter = [];
 
-    const andFilter =
-      queries && Object.keys(queries).length
-        ? {
-            $and: Object.entries(queries).map(([key, value]) => ({
-              [key]: { $regex: new RegExp(value, "i") },
-            })),
-          }
-        : undefined;
+    if (search) {
+      orFilter.push({ title: { $regex: new RegExp(search, "i") } });
+    }
+
+    if (queries && Object.keys(queries).length) {
+      const dbQueries = Object.entries(queries).map(([key, value]) => ({
+        [key]: { $regex: new RegExp(value, "i") },
+      }));
+      andFilter.push(...dbQueries);
+    }
+    if (channel) {
+      andFilter.push({ channel });
+    }
 
     const filter = {
-      ...searchFilter,
-      ...andFilter,
+      $or: orFilter,
+      $and: andFilter,
     };
 
     const data = await this.videoModel

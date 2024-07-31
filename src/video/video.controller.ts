@@ -47,17 +47,18 @@ export class VideoController {
       const country = req.query.country ? String(req.query.country) : "";
       const category = req.query.category ? String(req.query.category) : "";
       const type = req.query.type ? String(req.query.type) : "";
-
+      const channel = req.query.channel ? String(req.query.channel) : "";
       const { data, total } = await this.videoService.findAll({
         page,
         limit,
         sortBy,
         sortOrder,
         search,
-         populate,
+        populate,
         country,
         category,
-        type
+        type,
+        channel,
       });
 
       return {

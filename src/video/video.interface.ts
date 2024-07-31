@@ -24,5 +24,6 @@ export interface IVideoQueryParams {
   country?: string;
   category?: string;
   type?: string;
+  channel?: string; // for specific channel videos
 }
 

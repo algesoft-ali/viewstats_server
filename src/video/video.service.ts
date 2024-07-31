@@ -46,6 +46,9 @@ export class VideoService {
       $and: andFilter,
     };
 
+    if (!filter.$or?.length) delete filter.$or;
+    if (!filter.$and?.length) delete filter.$and;
+
     const data = await this.videoModel
       .find(
         filter,

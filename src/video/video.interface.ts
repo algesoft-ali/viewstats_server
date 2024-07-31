@@ -8,6 +8,7 @@ export interface IVideo {
   uploadDate: Date | string;
   totalViews: number;
   type: "long" | "shorts";
+  category: string;
   channel: string | IChannel;
 }
 
@@ -19,6 +20,9 @@ export interface IVideoQueryParams {
   sortBy?: string;
   sortOrder?: "asc" | "desc";
   search?: string;
-  channel?: boolean;
+  populate?: boolean;
+  country?: string;
+  category?: string;
+  type?: string;
 }
 

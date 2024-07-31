@@ -43,7 +43,10 @@ export class VideoController {
         ? (String(req.query.sortOrder) as "asc" | "desc")
         : "desc";
       const search = req.query.search ? String(req.query.search) : "";
-      const isPopulate = req.query.channel === "true";
+      const populate = req.query.populate === "true";
+      const country = req.query.country ? String(req.query.country) : "";
+      const category = req.query.category ? String(req.query.category) : "";
+      const type = req.query.type ? String(req.query.type) : "";
 
       const { data, total } = await this.videoService.findAll({
         page,
@@ -51,7 +54,10 @@ export class VideoController {
         sortBy,
         sortOrder,
         search,
-        channel: isPopulate,
+         populate,
+        country,
+        category,
+        type
       });
 
       return {

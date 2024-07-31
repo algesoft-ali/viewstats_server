@@ -20,5 +20,8 @@ export class CreateVideoDTO {
   type: "long" | "shorts";
 
   @IsString()
+  category: string;
+
+  @IsString()
   channel: string;
 }

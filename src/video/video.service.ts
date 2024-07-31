@@ -12,19 +12,41 @@ export class VideoService {
     return result;
   }
 
+  // -------------- v1
   async findAll({
     page,
     limit,
-    search,
     sortBy,
     sortOrder,
-    channel,
+    search,
+    populate,
+    country,
+    ...queries
   }: IVideoQueryParams): Promise<{ data: IVideo[]; total: number }> {
-    const filter = search
+    const searchFilter = search
       ? {
-          $or: [{ title: { $regex: new RegExp(search, "i") } }],
+          $or: [
+            { name: { $regex: new RegExp(search, "i") } },
+            {
+              username: { $regex: new RegExp(search, "i") },
+            },
+          ],
         }
-      : {};
+      : undefined;
+
+    const andFilter =
+      queries && Object.keys(queries).length
+        ? {
+            $and: Object.entries(queries).map(([key, value]) => ({
+              [key]: { $regex: new RegExp(value, "i") },
+            })),
+          }
+        : undefined;
+
+    const filter = {
+      ...searchFilter,
+      ...andFilter,
+    };
 
     const data = await this.videoModel
       .find(
@@ -38,7 +60,10 @@ export class VideoService {
           limit,
         }
       )
-      .populate(channel ? "channel" : "", channel ? "_id name username logo" : "");
+      .populate(
+        populate ? "channel" : "",
+        populate ? "_id name username logo" : ""
+      );
 
     const total = await this.videoModel.countDocuments(filter);
 

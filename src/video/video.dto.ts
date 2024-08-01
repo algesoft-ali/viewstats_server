@@ -17,7 +17,7 @@ export class CreateVideoDTO {
   totalViews: number;
 
   @IsString()
-  type: "long" | "shorts";
+  type: "long" | "short";
 
   @IsString()
   category: string;

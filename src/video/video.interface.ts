@@ -7,7 +7,7 @@ export interface IVideo {
   duration: string;
   uploadDate: Date | string;
   totalViews: number;
-  type: "long" | "shorts";
+  type: "long" | "short";
   category: string;
   channel: string | IChannel;
 }

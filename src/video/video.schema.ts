@@ -12,8 +12,8 @@ export const VideoSchema = new mongoose.Schema<IVideo>(
     type: {
       type: String,
       enum: {
-        values: ["long", "shorts"],
-        message: "Video type should be 'long' or 'shorts'",
+        values: ["long", "short"],
+        message: "Video type should be 'long' or 'short'",
       },
       required: true,
     },

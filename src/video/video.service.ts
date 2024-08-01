@@ -1,10 +1,12 @@
 import { Inject, Injectable } from "@nestjs/common";
+import { IChannelModel } from "src/channel/channel.interface";
 import { IVideo, IVideoModel, IVideoQueryParams } from "./video.interface";
 
 @Injectable()
 export class VideoService {
   constructor(
-    @Inject("VIDEO_MODEL") private readonly videoModel: IVideoModel
+    @Inject("VIDEO_MODEL") private readonly videoModel: IVideoModel,
+    @Inject("CHANNEL_MODEL") private readonly channelModel: IChannelModel
   ) {}
 
   async create(input: IVideo): Promise<IVideo> {
@@ -39,6 +41,17 @@ export class VideoService {
     }
     if (channel) {
       andFilter.push({ channel });
+    }
+
+    if (country) {
+      const filteredCountry = await this.channelModel.find(
+        { country },
+        {
+          _id: 1,
+        }
+      );
+
+      andFilter.push({ channel: { $in: filteredCountry } });
     }
 
     const filter = {

@@ -9,6 +9,7 @@ export const VideoSchema = new mongoose.Schema<IVideo>(
     uploadDate: { type: Date || String, required: true },
     totalViews: { type: Number, required: true },
     category: { type: String, required: true },
+    ytId: { type: String, required: true },
     type: {
       type: String,
       enum: {

@@ -24,4 +24,7 @@ export class CreateVideoDTO {
 
   @IsString()
   channel: string;
+
+  @IsString()
+  ytId: string;
 }

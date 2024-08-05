@@ -10,6 +10,7 @@ export interface IVideo {
   type: "long" | "short";
   category: string;
   channel: string | IChannel;
+  ytId: string;
 }
 
 export type IVideoModel = Model<IVideo>;

@@ -93,4 +93,20 @@ export class VideoService {
 
     return data;
   }
+
+  async findRecent(channelId: string): Promise<IVideo> {
+    const data = await this.videoModel.findOne(
+      {
+        channel: channelId,
+      },
+      {},
+      {
+        sort: {
+          uploadDate: -1,
+        },
+      }
+    );
+
+    return data
+  }
 }

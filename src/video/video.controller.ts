@@ -76,6 +76,25 @@ export class VideoController {
     }
   }
 
+  // ------ Get Recent Video
+  @Get("recent")
+  async findRecent(@Req() req: Request) {
+    try {
+      const channelId = req.query.channel ? String(req.query.channel) : "";
+      const data = await this.videoService.findRecent(channelId);
+
+      return {
+        success: true,
+        message: data
+          ? "Recent Video Retrieved Successfully!"
+          : "No Video Found!",
+        data,
+      };
+    } catch (error) {
+      throw new HttpException(error?.message, error?.statusCode);
+    }
+  }
+
   // ------ Get Single Video
   @Get(":id")
   async findOne(@Param() params: { id: string }) {

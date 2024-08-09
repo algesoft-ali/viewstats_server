@@ -8,16 +8,19 @@ import {
   Post,
   Req,
 } from "@nestjs/common";
+import { ApiBody, ApiParam, ApiQuery, ApiTags } from "@nestjs/swagger";
+import { Request } from "express";
 import { CreateChannelDTO } from "./channel.dto";
 import { ChannelService } from "./channel.service";
-import { Request } from "express";
 
 @Controller("channel")
+@ApiTags("Channel")
 export class ChannelController {
   constructor(private channelService: ChannelService) {}
 
   // ------ Create Channel
   @Post()
+  @ApiBody({ type: CreateChannelDTO })
   async create(@Body() inputData: CreateChannelDTO) {
     try {
       const data = await this.channelService.createChannel(inputData);
@@ -33,6 +36,13 @@ export class ChannelController {
 
   // ------ Get All Channels
   @Get()
+  @ApiQuery({ name: "page", type: Number, required: false })
+  @ApiQuery({ name: "limit", type: Number, required: false })
+  @ApiQuery({ name: "sortBy", type: String, required: false })
+  @ApiQuery({ name: "sortOrder", type: String, required: false })
+  @ApiQuery({ name: "search", type: String, required: false })
+  @ApiQuery({ name: "country", type: String, required: false })
+  @ApiQuery({ name: "category", type: String, required: false })
   async findAll(@Req() req: Request) {
     const page = Number(req.query.page) || 1;
     const limit = Number(req.query.limit) || 20;
@@ -78,6 +88,7 @@ export class ChannelController {
 
   // ------ Get Single Channel
   @Get(":username")
+  @ApiParam({ name: "username", type: String, required: true })
   async findOne(@Param() param: { username: string }) {
     try {
       const username = param.username;

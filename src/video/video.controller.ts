@@ -8,16 +8,19 @@ import {
   Post,
   Req,
 } from "@nestjs/common";
-import { VideoService } from "./video.service";
-import { CreateVideoDTO } from "./video.dto";
+import { ApiBody, ApiParam, ApiQuery, ApiTags } from "@nestjs/swagger";
 import { Request } from "express";
+import { CreateVideoDTO } from "./video.dto";
+import { VideoService } from "./video.service";
 
 @Controller("video")
+@ApiTags("Video")
 export class VideoController {
   constructor(private readonly videoService: VideoService) {}
 
   // ------- Create Video
   @Post()
+  @ApiBody({ type: CreateVideoDTO })
   async create(@Body() input: CreateVideoDTO) {
     try {
       const data = await this.videoService.create(input);
@@ -34,6 +37,16 @@ export class VideoController {
 
   // ------- Get All Video
   @Get()
+  @ApiQuery({ name: "page", required: false })
+  @ApiQuery({ name: "limit", required: false })
+  @ApiQuery({ name: "sortBy", required: false })
+  @ApiQuery({ name: "sortOrder", required: false })
+  @ApiQuery({ name: "search", required: false })
+  @ApiQuery({ name: "populate", type: Boolean, required: false })
+  @ApiQuery({ name: "country", required: false })
+  @ApiQuery({ name: "category", required: false })
+  @ApiQuery({ name: "type", required: false })
+  @ApiQuery({ name: "channel", required: false })
   async findAll(@Req() req: Request) {
     try {
       const page = Number(req.query.page) || 1;
@@ -78,6 +91,7 @@ export class VideoController {
 
   // ------ Get Recent Video
   @Get("recent")
+  @ApiQuery({ name: "channel" })
   async findRecent(@Req() req: Request) {
     try {
       const channelId = req.query.channel ? String(req.query.channel) : "";
@@ -97,6 +111,7 @@ export class VideoController {
 
   // ------ Get Single Video
   @Get(":id")
+  @ApiParam({ name: "id" })
   async findOne(@Param() params: { id: string }) {
     try {
       const id = params?.id;

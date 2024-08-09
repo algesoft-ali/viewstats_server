@@ -2,8 +2,10 @@ import { Controller, Get, Req, Res, UseGuards } from "@nestjs/common";
 import { AuthGuard as AuthGuardPassport } from "@nestjs/passport";
 import { Request, Response } from "express";
 import { AuthService } from "./auth.service";
+import { ApiTags } from "@nestjs/swagger";
 
 @Controller("auth")
+@ApiTags("Auth")
 export class AuthController {
   constructor(private authService: AuthService) {}
 
